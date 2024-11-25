@@ -886,6 +886,23 @@ public class JsonPatchTests
     }
 
     [TestMethod]
+    public void Replace_WhenValueProperty_WithNull()
+    {
+        var source = JsonNode.Parse(
+            """
+            {
+                "first": "John"
+            }
+            """ );
+
+        var patch = new JsonPatch(
+            new PatchOperation( PatchOperationType.Replace, "/first", null, null )
+        );
+
+        patch.Apply( source );
+
+        Assert.AreEqual( null, source!["first"] );
+    }
     public void Replace_WhenValueObject()
     {
         var source = JsonNode.Parse(
